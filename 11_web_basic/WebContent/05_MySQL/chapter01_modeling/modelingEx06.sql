@@ -1,0 +1,261 @@
+/*
+
+	# 제약 조건
+	
+		- NOT NULL : NULL 금지
+		- UNIQUE   : 중복값입력 금지(NULL은 중복가능)
+		- DEFAULT  : 초깃값 입력
+		- PRIMARY KEY(PK) : 
+							테이블에 유일하게 구분되는 키로 주 식별자, 주키 등으로 불린다.
+							PRIMARY KEY는 유일한 값이기 때문에 중복된 값을 가질 수 없다.
+							기본 키에 입력되는 값은 중복될 수 없으며, NULL 값이 입력될 수 없다.
+							PRIMARY KEY 제약 조건을 설정하면, 해당 필드는 NOT NULL과 UNIQUE 제약 조건의 특징을 모두 가진다.
+							
+		 - FOREIGN KEY(FK)  :
+							외부키, 참조키, 외부 식별자 등으로 불린다.
+							한 테이블과 참조되는 다른 테이블 간의 연결되는 Primary Key Column을 Foreign Key라 한다.	
+							테이블을 연결해주는 역할을 한다.
+							FOREIGN KEY 는 참조관계의 기본 키와 같은 속성을 가진다.
+							FOREIGN KEY 는 외부 테이블에서 참고하려는 주 키 (primary key) 를 의미한다.
+							'외래 키 테이블'에 데이터를 입력할 때는 꼭 '기준 테이블'을 참조해서 입력하므로 반드시 '기준 테이블'에 존재하는 데이터만 입력이 가능하다.
+							'외래 키 테이블'이 참조하는 '기준 테이블'의 열은 반드시 PK이거나 UNIQUE 제약 조건이 설정되어 있어야 한다.
+		
+        [ 형식 ]
+	
+		  (CONSTRAINT [CONSTRAINT_NAME]생략가능) FOREIGN KEY (자식 테이블 컬럼 명) REFERENCES 참조테이블(부모 테이블 기본키명) 
+		  ON UPDATE 옵션 ON DELETE 옵션
+		  
+            - 옵션 상세
+          
+			 CASCADE     : 참조되는 테이블에서 데이터를 삭제하거나 수정하면 참조하는 테이블에서도 삭제와 수정이 같이 이루어짐
+			 SET NULL    : 참조되는 테이블에서 데이터를 삭제하거나 수정하면 참조하는 테이블의 데이터는 NULL로 변경됨
+			 RESTRICT    : 참조하는 테이블에 데이터가 남아 있으면 참조되는 테이블의 데이터를 삭제하거나 수정할 수 없음(기본설정)
+             NO ACTION   : 참조되는 테이블에서 데이터를 삭제하거나 수정하면 참조하는 테이블의 데이터는 변경되지 않음
+
+
+	 # ERD Diagram 생성하기
+	 
+	 	- Database태그 > Reverse Engineer > Stored Connection 선택 및 username , password 인증 > schemas 선택
+
+*/
+
+CREATE DATABASE CONSTRAINTS_TEST;
+USE CONSTRAINTS_TEST;
+
+
+
+# 0) 제약사항 없음
+CREATE TABLE TEST0 (
+	PRODUCT_CD INT,
+    PRODUCT_NM VARCHAR(20),
+    PRICE	   INT,
+    REG_DT     DATETIME
+);
+
+INSERT INTO TEST0 VALUES(1, '상품1', 1000 , NOW()); 						  	  # SUCCESS
+INSERT INTO TEST0(PRODUCT_NM , PRICE , REG_DT) VALUES('상품2', 2000 , NOW());  # SUCCESS
+INSERT INTO TEST0(PRODUCT_CD , PRICE , REG_DT) VALUES(3, 3000 , NOW());       # SUCCESS
+INSERT INTO TEST0(PRICE , REG_DT) VALUES(4000 , NOW());      				  # SUCCESS
+INSERT INTO TEST0(REG_DT) VALUES(NOW()); 									  # SUCCESS
+SELECT * FROM TEST0;
+
+
+# 1) NOT NULL : NULL 입력 금지
+CREATE TABLE TEST1 (
+	PRODUCT_CD INT         NOT NULL,
+    PRODUCT_NM VARCHAR(20) NOT NULL,
+    PRICE	   INT,
+    REG_DT     DATETIME
+);
+
+INSERT INTO TEST1 VALUES(1, '상품1', 1000 , NOW()); 							 # SUCCESS
+INSERT INTO TEST1(PRODUCT_NM , PRICE , REG_DT) VALUES('상품2', 2000 , NOW()); # ERROR
+INSERT INTO TEST1(PRODUCT_CD , PRICE , REG_DT) VALUES(3, 3000 , NOW());      # ERROR
+INSERT INTO TEST1(PRICE , REG_DT) VALUES(4000 , NOW());      				 # ERROR
+INSERT INTO TEST1(REG_DT) VALUES(NOW()); 									 # ERROR
+INSERT INTO TEST1(PRODUCT_CD , PRODUCT_NM) VALUES(6 , '상품6'); 				 # SUCCECC
+
+SELECT * FROM TEST1;
+
+
+# 2) UNIQUE : 중복데이터 입력 금지 ( NULL 값은 중복으로 인식하지 않는다. )
+CREATE TABLE TEST2 (
+	PRODUCT_CD INT 			UNIQUE,
+    PRODUCT_NM VARCHAR(20)  UNIQUE,
+    PRICE	   INT,
+    REG_DT     DATETIME
+);
+
+INSERT INTO TEST2 VALUES(1, '상품1', 1000 , NOW()); 							 # SUCCESS
+INSERT INTO TEST2(PRODUCT_NM , PRICE , REG_DT) VALUES('상품2', 2000 , NOW()); # SUCCESS
+INSERT INTO TEST2(PRODUCT_CD , PRICE , REG_DT) VALUES(3, 3000 , NOW());      # SUCCESS
+INSERT INTO TEST2(PRICE , REG_DT) VALUES(4000 , NOW());      				 # SUCCESS
+INSERT INTO TEST2(REG_DT) VALUES(NOW()); 									 # SUCCESS
+INSERT INTO TEST2(PRODUCT_CD , PRODUCT_NM) VALUES(1 , '상품6'); 				 # ERROR
+INSERT INTO TEST2(PRODUCT_CD , PRODUCT_NM) VALUES(7 , '상품1');				 # ERROR
+SELECT * FROM TEST2;
+
+
+
+# 3) DEFAULT : 초깃값 지정
+CREATE TABLE TEST3 (
+	PRODUCT_CD INT,
+    PRODUCT_NM VARCHAR(20),
+    PRICE	   INT      DEFAULT -1,
+    REG_DT     DATETIME DEFAULT NOW()
+);
+
+INSERT INTO TEST3 VALUES(1, '상품1', 1000 , NOW()); 							 # SUCCESS
+INSERT INTO TEST3(PRODUCT_CD , PRODUCT_NM) VALUES(2 , '상품2'); 				 # SUCCESS
+INSERT INTO TEST3(PRODUCT_CD , PRODUCT_NM) VALUES(3 , '상품3');				 # SUCCESS
+INSERT INTO TEST3 VALUES(4 , '상품4' , 4000 , '2022-12-31');					 # SUCCESS
+SELECT * FROM TEST3;
+
+
+# 4) AUTO_INCREMENT : 인덱스 자동증가 ( PRIMARY KEY 속성과 같이 사용한다. )
+CREATE TABLE TEST4 (
+	PRODUCT_CD INT AUTO_INCREMENT PRIMARY KEY, 
+    PRODUCT_NM VARCHAR(20),
+    PRICE	   INT,
+    REG_DT     DATETIME 
+);
+
+INSERT INTO TEST4 VALUES(1, '상품1', 1000 , NOW()); 			     # SUCCESS
+INSERT INTO TEST4(PRODUCT_NM) VALUES('상품2'); 				     # SUCCESS
+INSERT INTO TEST4(PRODUCT_NM) VALUES('상품3');				     # SUCCESS
+INSERT INTO TEST4 VALUES(10 , '상품10' , 10000 , '2022-12-31');	 # SUCCESS
+INSERT INTO TEST4(PRODUCT_NM) VALUES('상품11');				     # SUCCESS
+INSERT INTO TEST4(PRODUCT_NM) VALUES('상품10');	 # SUCCESS
+SELECT * FROM TEST4;
+
+
+# 5) PRIMARY KEY  : NOT NULL + UNIQUE
+CREATE TABLE TEST5 (
+	PRODUCT_CD INT PRIMARY KEY,
+    PRODUCT_NM VARCHAR(20),
+    PRICE	   INT,
+    REG_DT     DATETIME
+    # PRIMARY KEY(PRODUCT_CD)
+);
+
+INSERT INTO TEST5 VALUES(1, '상품1', 1000 , NOW()); 							 # SUCCESS
+INSERT INTO TEST5(PRODUCT_NM , PRICE , REG_DT) VALUES('상품2', 2000 , NOW()); # ERROR
+INSERT INTO TEST5(PRODUCT_CD , PRICE , REG_DT) VALUES(3, 3000 , NOW());      # SUCCESS
+INSERT INTO TEST5(PRICE , REG_DT) VALUES(4000 , NOW());      				 # ERROR
+INSERT INTO TEST5(REG_DT) VALUES(NOW()); 									 # ERROR
+INSERT INTO TEST5(PRODUCT_CD , PRODUCT_NM) VALUES(6 , '상품6'); 				 # SUCCESS
+INSERT INTO TEST5(PRODUCT_CD , PRODUCT_NM) VALUES(6 , '상품7'); 				 # ERROR
+SELECT * FROM TEST5;
+
+
+# 6~8) PRIMARY KEY , FOREIGN KEY
+
+# 6) 메인키와 참조키를 사용하지 않았을 경우의 예시
+CREATE TABLE TEST6_1(
+	PRODUCT_CD INT,
+    PRODUCT_NM VARCHAR(20),
+    PRICE      VARCHAR(20) DEFAULT 10000,
+    REG_DT     DATETIME	   DEFAULT NOW()
+); 
+
+INSERT INTO TEST6_1(PRODUCT_CD , PRODUCT_NM) VALUES (1 , '상품1'); 
+INSERT INTO TEST6_1(PRODUCT_CD , PRODUCT_NM) VALUES (2 , '상품2'); 
+INSERT INTO TEST6_1(PRODUCT_CD , PRODUCT_NM) VALUES (3 , '상품3'); 
+
+CREATE TABLE TEST6_2(
+	ORDER_CD  VARCHAR(10),
+    MEMBER_ID VARCHAR(20),
+    PRODUCT_CD INT
+);
+
+INSERT INTO TEST6_2 VALUES ('O1' , '유저1' , 1); 
+INSERT INTO TEST6_2 VALUES ('O2' , '유저2' , 2); 
+INSERT INTO TEST6_2 VALUES ('O3' , '유저3' , 3);
+INSERT INTO TEST6_2 VALUES ('O4' , '유저3' , 3); 
+INSERT INTO TEST6_2 VALUES ('O5' , '유저3' , 3);  
+INSERT INTO TEST6_2 VALUES ('O6' , '유저1' , 4); 	# 메인테이블과 참조테이블 사이 데이터의 차이가 발생
+INSERT INTO TEST6_2 VALUES ('O7' , '유저2' , 5); 	# 메인테이블과 참조테이블 사이 데이터의 차이가 발생
+
+UPDATE TEST6_1 SET PRODUCT_CD = 11 WHERE PRODUCT_CD = 1; # 메인테이블과 참조테이블 사이 데이터의 차이가 발생
+UPDATE TEST6_1 SET PRODUCT_CD = 22 WHERE PRODUCT_CD = 2; # 메인테이블과 참조테이블 사이 데이터의 차이가 발생
+DELETE FROM TEST6_1 WHERE PRODUCT_CD = 3;                # 메인테이블과 참조테이블 사이 데이터의 차이가 발생
+
+SELECT * FROM TEST6_1;
+SELECT * FROM TEST6_2;
+
+
+# 7) 메인키와 참조키 설정 예시
+CREATE TABLE TEST7_1(
+	PRODUCT_CD INT PRIMARY KEY,
+    PRODUCT_NM VARCHAR(20),
+    PRICE      VARCHAR(20) DEFAULT 10000,
+    REG_DT     DATETIME	   DEFAULT NOW()
+); 
+
+INSERT INTO TEST7_1(PRODUCT_CD , PRODUCT_NM) VALUES (1 , '상품1'); 
+INSERT INTO TEST7_1(PRODUCT_CD , PRODUCT_NM) VALUES (2 , '상품2'); 
+INSERT INTO TEST7_1(PRODUCT_CD , PRODUCT_NM) VALUES (3 , '상품3'); 
+
+CREATE TABLE TEST7_2(
+	ORDER_CD  VARCHAR(10),
+    MEMBER_ID VARCHAR(20),
+    PRODUCT_CD INT,
+    #FOREIGN KEY (PRODUCT_CD) REFERENCES TEST7_1(PRODUCT_CD) #참조키 설정
+    CONSTRAINT PRODUCT_CD_REF1 FOREIGN KEY (PRODUCT_CD) REFERENCES TEST7_1(PRODUCT_CD) #참조키 설정
+);
+
+INSERT INTO TEST7_2 VALUES ('O1' , '유저1' , 1); 
+INSERT INTO TEST7_2 VALUES ('O2' , '유저2' , 2); 
+INSERT INTO TEST7_2 VALUES ('O3' , '유저3' , 3);
+INSERT INTO TEST7_2 VALUES ('O4' , '유저3' , 3); 
+INSERT INTO TEST7_2 VALUES ('O5' , '유저3' , 3);  
+INSERT INTO TEST7_2 VALUES ('O6' , '유저1' , 4); 	# KEY 참조 제약 위반 (메인키에 없는 데이터)
+INSERT INTO TEST7_2 VALUES ('O7' , '유저2' , 5); 	# KEY 참조 제약 위반 (메인키에 없는 데이터)
+
+UPDATE TEST7_1 SET PRODUCT_CD = 11 WHERE PRODUCT_CD = 1; # 참조키가 있을 경우 메인키의 데이터만 수정 불가
+UPDATE TEST7_1 SET PRODUCT_CD = 22 WHERE PRODUCT_CD = 2; # 참조키가 있을 경우 메인키의 데이터만 수정 불가
+DELETE FROM TEST7_1 WHERE PRODUCT_CD = 3;                # 참조키가 있을 경우 메인키의 데이터만 수정 불가
+
+SELECT * FROM TEST7_1;
+SELECT * FROM TEST7_2;
+
+
+
+# 8) 메인키와 참조키 옵션 적용 예시
+CREATE TABLE TEST8_1(
+	PRODUCT_CD INT PRIMARY KEY,	 # 메인키 설정
+    PRODUCT_NM VARCHAR(20),
+    PRICE      VARCHAR(20) DEFAULT 10000,
+    REG_DT     DATETIME	   DEFAULT NOW()
+); 
+
+INSERT INTO TEST8_1(PRODUCT_CD , PRODUCT_NM) VALUES (1 , '상품1'); 
+INSERT INTO TEST8_1(PRODUCT_CD , PRODUCT_NM) VALUES (2 , '상품2'); 
+INSERT INTO TEST8_1(PRODUCT_CD , PRODUCT_NM) VALUES (3 , '상품3'); 
+
+CREATE TABLE TEST8_2(
+	ORDER_CD  VARCHAR(10),
+    MEMBER_ID VARCHAR(20),
+    PRODUCT_CD INT,
+    CONSTRAINT PRODUCT_CD_REF2 FOREIGN KEY(PRODUCT_CD) REFERENCES TEST8_1(PRODUCT_CD)
+    ON UPDATE CASCADE   # 참조 옵션 설정
+    ON DELETE SET NULL  # 참조 옵션 설정
+);
+
+INSERT INTO TEST8_2 VALUES ('O1' , '유저1' , 1); 
+INSERT INTO TEST8_2 VALUES ('O2' , '유저2' , 2); 
+INSERT INTO TEST8_2 VALUES ('O3' , '유저3' , 3);
+INSERT INTO TEST8_2 VALUES ('O4' , '유저3' , 3); 
+INSERT INTO TEST8_2 VALUES ('O5' , '유저3' , 3);  
+INSERT INTO TEST8_2 VALUES ('O6' , '유저1' , 4); 	# KEY 참조 제약 위반 (메인키에 없는 데이터) 
+INSERT INTO TEST8_2 VALUES ('O7' , '유저2' , 5); 	# KEY 참조 제약 위반 (메인키에 없는 데이터) 
+
+UPDATE TEST8_1 SET PRODUCT_CD = 11 WHERE PRODUCT_CD = 1; # 메인키의 데이터가 수정될 경우 참조키의 데이터도 같이 수정
+UPDATE TEST8_1 SET PRODUCT_CD = 22 WHERE PRODUCT_CD = 2; # 메인키의 데이터가 수정될 경우 참조키의 데이터도 같이 수정
+DELETE FROM TEST8_1 WHERE PRODUCT_CD = 3;                # 메인키의 데이터가 삭제될 경우 참조키의 데이터는 NULL로 수정
+
+SELECT * FROM TEST8_1;
+SELECT * FROM TEST8_2;
+				
+                
+DROP DATABASE CONSTRAINTS_TEST;

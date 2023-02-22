@@ -1,0 +1,33 @@
+<!-- 2022-12-08 오후 3:32 ~ 3:35 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>연습예제</title>
+<script>
+	
+	function 따라하기() {
+		
+		document.getElementById("displaySearchWord").innerHTML = "입력된 검색어 : " + document.getElementById("search").value;
+		
+	}
+	
+</script>
+</head>
+<body>
+
+	<!-- 
+		
+		키보드에 글자가 입력될때마다 입력된 내용을 "displaySearchWord"에 출력하는 스크립트를 작성해보시오.
+	
+	 -->
+
+
+	<p>검색어 : <input type="text" id="search" onkeyup="따라하기()"></p>
+	
+	<div id="displaySearchWord">
+		
+	</div>
+
+</body>
+</html>

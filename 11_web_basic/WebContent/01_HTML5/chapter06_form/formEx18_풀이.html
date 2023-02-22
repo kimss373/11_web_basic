@@ -1,0 +1,69 @@
+<!-- 2022-12-07 오후 4:20 ~ 4:32 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>연습예시</title>
+</head>
+<body>
+	<form>
+		<fieldset>
+			<legend>배송지 정보</legend>
+			
+			<p>
+				배송방법 
+				<input type="radio" name="how" value="1"> 일반택배
+				<input type="radio" name="how" value="2"> 편의점택배
+				<input type="radio" name="how" value="3"> 해외배송
+			</p>
+			<p>
+				배송지 선택
+				<input type="radio" name="destination" value="1"> 기본배송지
+				<input type="radio" name="destination" value="2"> 새로입력
+지				<input type="radio" name="destination" value="3"> 최근배송지
+			</p>
+			<p>
+				받으실분 <input type="text" name="toWho">
+			</p>
+			<p>
+				휴대폰번호 	<select name="ph1">
+								<option value="010">010</option>
+							</select>
+				- <input type="text" name="ph2">
+				- <input type="text" name="ph3">
+			</p>
+			<p>
+				유선전화(선택) <select name="ho1">
+								<option value="02">010</option>
+								</select>
+				- <input type="text" name="ho2">
+				- <input type="text" name="ho3">
+			</p>
+			<p>
+				주소 <input type="text" name="주소"> <a href="https://www.naver.com">우편번호검색</a>
+			</p>
+			<p>
+				지번 주소 : <input type="text" name="지번 주소">
+			</p>
+			<p>
+				도로명 주소 : <input type="text" name="도로명 주소">
+			</p>
+			<p>
+				나머지 주소 : <input type="text" name="나머지 주소">
+			</p>
+			<p>
+				배송 메시지
+				<input type="radio" name="ye"> 예
+				<input type="radio" name="no"> 아니요
+			</p>
+			<p>
+				<input type="text" name="message" placeholder="택배 기사님께 전달할 메시지를 남겨주세요.">
+			</p>
+			
+			
+			
+		</fieldset>
+	</form>	
+					
+</body>
+</html>

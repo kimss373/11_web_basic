@@ -1,0 +1,108 @@
+<!-- 2022-11-30 오후 3:40 ~ 3:39 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>연습문제</title>
+</head>
+<body>
+	<h4>내 상세 정보</h4>
+	<form>
+		<table border="1">
+			<tr>
+				<td>아이디</td>
+				<td><input type="text" name="id"></td>
+			</tr>
+			<tr>
+				<td>비밀번호<td>
+				<td><input type="text" name="pwd"></td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<td>성별</td>
+				<td><input type="radio" name="0001" value="man">남성 
+					<input type="radio" name="0001" value="woman">여성
+				</td>
+			</tr>	
+			<tr>
+				<td>생년월일</td>
+				<td>
+					<select name="year">
+						<option value="2022">2022</option>
+						<option value="2021">2021</option>
+						<option value="2020">2020</option>
+						<option value="2019">2019</option>
+					</select>
+					년
+					<select name="month">
+						<option value="11">11</option>
+						<option value="10">10</option>
+						<option value="9">9</option>
+						<option value="8">8</option>
+					</select>
+					월
+					<select name="day">
+						<option value="30">30</option>
+						<option value="29">29</option>
+						<option value="28">28</option>
+						<option value="27">27</option>
+					</select>
+					일
+					&nbsp;&nbsp;
+					<input type="radio" name="음양" value="음력">음력
+					<input type="radio" name="음양" value="양력">양력
+					
+				</td>
+			</tr>	
+			<tr>
+				<td>전화번호</td>
+				<td>
+					<select name="02">
+						<option value="none">없음</option>
+						<option value="02">02</option>
+						<option value="031">031</option>
+						<option value="063">063</option>
+					</select>
+					-
+					<input type="text" name="HomeMiddleNum">
+					-
+					<input type="text" name="HomeLastNum">
+				</td>
+			</tr>	
+			<tr>
+				<td>핸드폰 번호</td>
+				<td>
+					<select name="010">
+						<option value="none">없음</option>
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="019">019</option>
+					</select>
+					-
+					<input type="text" name="PhoneMiddleNum">
+					-
+					<input type="text" name="PhoneLastNum">
+					<br>
+					<input type="checkbox" name="BMSSMS" value="true"> BMS에서 발송하는 SMS 소식을 수신합니다.
+				</td>
+			</tr>
+			<tr>
+				<td>이메일(e-mail)</td>
+				<td>
+					<input type="text" name="우편번호"> <input type="button" value="검색"><br>
+					지번 주소 : <input type="text" name="지번주소"><br>
+					도로명 주소 : <input type="text" name="도로명 주소주소"><br>
+					나머지 주소 : <input type="text" name="나머지 주소"><br>
+					
+				</td>
+			</tr>
+			
+			
+			
+		</table>
+	</form>	
+</body>
+</html>

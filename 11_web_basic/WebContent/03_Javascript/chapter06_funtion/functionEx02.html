@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "UTF-8">
+<title>변수의 생명주기</title>
+<script>
+	
+	var data = "전역데이터"; // 함수 밖의 전역변수
+	
+	function func1(){
+		var func1Data = "지역데이터1"; // 함수1의 지역변수
+		
+		document.write(data, "<br>");;			// success
+		document.write(func1Data, "<br>");;		// success
+// 		document.write(func2Data, "<br>");;		// error
+		
+	}
+	
+	function func2(){
+		var func2Data = "지역데이터2"; // 함수2의 지역변수
+		
+		document.write(data, "<br>");;			// success
+// 		document.write(func1Data, "<br>");;		// error
+		document.write(func2Data, "<br>");;		// success
+		
+	}
+	func1();
+	func2();
+	
+// 	document.write(data, "<br>");;       // success
+// 	document.write(func1Data, "<br>");;  // error
+// 	document.write(func2Data, "<br>");;  // error
+
+	var idx1 = 1;
+	function func3() {
+	
+		var idx2 = 1;
+		
+		console.log("idx1 : " + idx1 + " / idx2 : " + idx2);
+		
+		idx1++;
+		idx2++;
+		
+	}
+	
+</script>
+</head>
+<body>
+
+	<input type="button" value="다음" onclick="func3()">
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!-- 2022-12-06 오후 5:07 ~ 5:12 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>연습예제</title>
+<script>
+	function answer() {
+		
+		if (document.getElementById("searchType").value != "전체"){
+			
+			document.getElementById("searchWord").placeholder = document.getElementById("searchType").value + "를 입력하세요."
+			
+		}
+		
+	}
+</script>
+</head>
+<body>
+	
+	<!-- 
+		
+		셀렉트 태그에서 분류를 선택하고 분류에 해당하는 placeholder값을 변경하는 스크립트를 작성해보시오.
+		
+		1) 전체를 선택하면 빈 화면으로 표시
+		2) 상품번호를 선택하면 '상품번호를 입력하세요' 표시
+		3) 상품이름을 선택하면 '상품이름을 입력하세요' 표시
+		4) 저자를 선택하면     '저자를 입력하세요' 표시
+		5) 출판사를 선택하면   '출판사를 입력하세요' 표시
+		
+		
+	 -->
+
+    <p>
+        <select id="searchType">
+			<option value="전체">전체</option>
+			<option value="상품번호">상품번호</option>
+			<option value="상품이름">상품이름</option>
+			<option value="저자">저자</option>
+			<option value="출판사">출판사</option>
+		</select>
+		<input type="text" size="30" id="searchWord" />  
+ 		<input type="button" value="정답" onclick="answer()">
+ 	</p>
+</body>
+</html>

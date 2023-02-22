@@ -1,0 +1,121 @@
+<!-- 2022-12-09 오후 4:25 ~ 4:31 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>연습문제</title>
+<script>
+
+	function isValidate() {
+		
+		var payWay = document.pay.payWay;
+		if(payWay.value == "") {
+			alert("결제방법을 선택하세요.");
+			payWay[0].focus();
+			return false;
+		}
+		
+		var card = document.pay.card;
+		if(card.value == "없음") {
+			alert("카드를 선택하세요.");
+			card.focus();
+			return false;
+		}
+		
+		var installment = document.pay.installment;
+		if(installment.value == "없음") {
+			alert("할부기간을 선택하세요.");
+			installment.focus();
+			return false;
+		}
+		
+		var ph1 = document.pay.ph1;
+		if(ph1.value == "") {
+			alert("휴대폰번호를 입력하세요.");
+			ph1.focus();
+			return false;
+		}
+		
+		var ph2 = document.pay.ph2;
+		if(ph2.value == "") {
+			alert("휴대폰번호를 입력하세요.");
+			ph2.focus();
+			return false;
+		}
+		
+		var ph3 = document.pay.ph3;
+		if(ph3.value == "") {
+			alert("휴대폰번호를 입력하세요.");
+			ph3.focus();
+			return false;
+		}
+		
+		
+		return true;
+		
+	}
+
+</script>
+</head>
+<body>
+
+	<!-- 
+	
+		# 입력하지 않은 필드의 값을 검증하여 
+		
+			1) alert으로 안내
+			2) focus로 이동
+			
+			하는 스크립트를 작성해 보시오. 
+		
+	-->
+
+	<form name="pay" onsubmit="return isValidate()">
+		<fieldset>
+			<p>
+				<strong>결제방법 : </strong>
+				<input type="radio" name="payWay" value="신용카드">신용카드 &emsp; 
+				<input type="radio" name="payWay" value="제휴 신용카드" >제휴 신용카드 &emsp;
+				<input type="radio" name="payWay" value="실시간 계좌이체">실시간 계좌이체 &emsp;
+				<input type="radio" name="payWay" value="무통장 입금">무통장 입금&emsp;
+			</p>
+			<p>
+				<strong>카드선택 : </strong>
+				<select name="card">
+					<option value="없음">없음</option>
+					<option value="삼성">삼성</option>
+					<option value="하나SK">하나SK</option>
+					<option value="현대">현대</option>
+					<option value="KB">KB</option>
+					<option value="신한">신한</option>
+					<option value="롯데">롯데</option>
+					<option value="BC">BC</option>
+					<option value="시티">시티</option>
+					<option value="NH농협">NH농협</option>
+				</select>
+			</p>
+			<p>
+				<strong>할부기간 : </strong>
+				<select name="installment">
+					<option value="없음">없음</option>
+					<option value="일시불">일시불</option>
+					<option value="2개월">2개월</option>
+					<option value="3개월">3개월</option>
+					<option value="4개월">4개월</option>
+					<option value="5개월">5개월</option>
+					<option value="6개월">6개월</option>
+				</select>
+			</p>	
+			<p>
+				<strong>휴대폰 번호 : </strong>
+				<input type="text" name="ph1" size="5"/>-
+				<input type="text" name="ph2" size="5"/>-
+				<input type="text" name="ph3" size="5"/>
+			</p>
+			<p>
+				<input type="submit" value="확인" />
+			</p>
+		</fieldset>
+	</form>
+</body>
+</html>

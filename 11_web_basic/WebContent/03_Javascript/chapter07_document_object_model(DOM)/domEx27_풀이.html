@@ -1,0 +1,79 @@
+<!-- 2022-12-08 오후 5:32 ~ 5:36 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>연습예제</title>
+<script>
+
+	function ghkrdls() {
+		
+		var year = document.getElementById("year").value;
+		var month = document.getElementById("month").value;
+		var day = document.getElementById("day").value;
+		
+		alert(year + "-" + month + "-" + day);
+		
+	}
+
+</script>
+</head>
+<body>
+
+	<!-- 
+	
+		버튼을 클릭할 때 '월' 과 '일'중에 1의 자리는 앞에 0을 붙여서 alert함수에 (년-월-일)형식으로 출력하시오.
+	
+		예시) 2022년 , 1월 , 1일     > 2022-01-01
+			  2018년 , 8월 , 15일    > 2022-08-15
+			  2019년 , 12월 , 7일    > 2019-12-07
+	 -->
+
+	<select id="year">
+		<option value="2022">2022</option>
+		<option value="2021">2021</option>
+		<option value="2020">2020</option>
+		<option value="2019">2019</option>
+		<option value="2018">2018</option>
+	</select> 년
+	<select id="month">
+		<option value="01">1</option>
+		<option value="02">2</option>
+		<option value="03">3</option>
+		<option value="04">4</option>
+		<option value="05">5</option>
+		<option value="06">6</option>
+		<option value="07">7</option>
+		<option value="08">8</option>
+		<option value="09">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+		<option value="12">12</option>
+	</select> 월
+	<select id="day">
+		<option value="01">1</option>
+		<option value="02">2</option>
+		<option value="03">3</option>
+		<option value="04">4</option>
+		<option value="05">5</option>
+		<option value="06">6</option>
+		<option value="07">7</option>
+		<option value="08">8</option>
+		<option value="09">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+		<option value="12">12</option>
+		<option value="13">13</option>
+		<option value="14">14</option>
+		<option value="15">15</option>
+		<option value="16">16</option>
+		<option value="17">17</option>
+		<option value="18">18</option>
+		<option value="19">19</option>
+		<option value="20">20</option>
+	</select> 일
+	 
+	<input type="button" value="확인" onclick="ghkrdls()">
+
+</body>
+</html>

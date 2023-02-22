@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>함수의 리턴</title>
+<script>
+
+	/*
+	
+	    # return
+	
+		- 자바와 같이 함수의 결과데이터를 return 키워드로 반환하고 함수를 종료할 수 있다.
+		- 리턴 타입을 명시하지 않고 return 키워드를 사용하여 값을 반환한 뒤에 함수를 종료한다.
+	
+	*/
+
+	function getGoodsName() {
+		return "기계식키보드";		
+	}
+	
+	function getGoodsPrice() {
+		return 40000;
+	}
+	
+	function showData() {
+		var result = getGoodsName() + " / " + getGoodsPrice();
+		document.write(result);
+	}
+	
+	showData();
+	
+</script>
+</head>
+<body>
+	
+	
+</body>
+</html>

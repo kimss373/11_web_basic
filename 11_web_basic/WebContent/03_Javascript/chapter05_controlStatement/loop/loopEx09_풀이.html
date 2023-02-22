@@ -1,0 +1,44 @@
+<!-- 2022-12-05 오후 5:23 ~ 5:27 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>연습예시</title>
+<script>
+
+	/*
+	 * # 369게임[2단계]
+	 * 
+	 * 1. 1~50까지 반복을 한다.
+	 * 2. 그 안에서 해당 숫자의 369게임의 결과를 출력한다.
+	 * 예) 1 2 짝 4 5 짝 7 8 짝 10 11 12 짝 ...
+	 * 
+	 */
+
+	for (var i = 1 ; i < 51 ; i++) {
+
+		var check10 = parseInt(i/10);
+		var check1 = i%10;
+		var answer = 0;
+	
+		if (check10 != 0 && check10 % 3 == 0) {
+			answer++;
+		}
+		if (check1 != 0 && check1 % 3 == 0) {
+			answer++;
+		}
+	
+		if (answer == 2) {
+			document.write("짝짝 ");
+		} else if (answer == 1) {
+			document.write("짝 ");
+		} else {
+			document.write(i + " ");
+		}
+	}
+	
+</script>
+</head>
+<body>
+</body>
+</html>
